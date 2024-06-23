@@ -46,13 +46,20 @@ public class EmpleadoController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
+	@GetMapping("/actualizarEmpleado/{id}")
+    public String showActualizarEmpleado(Model model, @PathVariable("id") String id) {
+        EmpleadoEntity empleadoEncontrado = empleadoRepository.findById(id).get();
+        List<AreaEntity> listaAreas = areaRepository.findAll();
+        model.addAttribute("listaAreas", listaAreas);
+        model.addAttribute("emple", empleadoEncontrado);
+        return "actualizarEmpleado";
+    }
+
+    @PostMapping("/actualizarEmpleado/{id}")
+    public String actualizarEmpleado(Model model ,@ModelAttribute EmpleadoEntity empleado) {
+        empleadoRepository.save(empleado);
+        return "redirect:/listar";
+    }
 	
 	
 	@GetMapping("/detalleEmpleado/{dni}")
